@@ -3,17 +3,15 @@ const morgan = require("morgan");
 const flash = require("express-flash");
 const session = require("express-session");
 const { body, validationResult } = require("express-validator");
-// const TodoList = require("./lib/todolist");
+const config = require("./config");
 const Todo = require("./lib/todo");
-// const { sortTodoLists, sortTodos } = require("./lib/sort");
 const { sortTodos } = require("./lib/sort");
 const store = require("connect-loki");
 const PgPersistence = require("./lib/pg-persistence");
 const catchError = require("./lib/catch-error");
-
 const app = express();
-const host = "localhost";
-const port = 3000;
+const host = config.HOST;
+const port = config.PORT;
 const LokiStore = store(session);
 
 app.set("views", "./views");
@@ -32,7 +30,7 @@ app.use(session({
   name: "launch-school-todos-session-id",
   resave: false,
   saveUninitialized: true,
-  secret: "this is not very secure",
+  secret: config.SECRET,
   store: new LokiStore({}),
 }));
 
@@ -381,3 +379,9 @@ app.use((err, req, res, _next) => {
 app.listen(port, host, () => {
   console.log(`Todos is listening on port ${port} of ${host}!`);
 });
+
+
+// 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
+// https://gentle-gorge-27144.herokuapp.com/ 
+// https://git.heroku.com/gentle-gorge-27144.git
+
